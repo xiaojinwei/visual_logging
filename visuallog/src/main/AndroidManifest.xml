@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cj.visuallog">
+
+    <application>
+
+        <activity android:name=".ui.VisualLogActivity"
+            android:theme="@style/Theme.VisualLog_Log"
+            />
+        <activity android:name=".ui.detail.VisualLogDetailActivity"
+            android:theme="@style/Theme.VisualLog_Log"
+            />
+    </application>
+
+</manifest>

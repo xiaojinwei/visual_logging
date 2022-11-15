@@ -1,0 +1,3 @@
+rootProject.name = "VisualLog"
+include ':app'
+include ':visuallog'
