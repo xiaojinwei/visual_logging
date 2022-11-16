@@ -41,11 +41,14 @@ class ResponseLogFragment(private val data: CommunicationData) : Fragment() {
                 addItemView(this,"received response at millis: ",DateUtil.timestampToTime(response.receivedResponseAtMillis))
                 addItemView(this,"duration: ",DateUtil.durationTime(response.sentRequestAtMillis,response.receivedResponseAtMillis,false))
                 addDivider(this)
+                addItemHeaderView(this,"Handshake",null,null)
+                addTextCopyView(this,response.handshake?.toString()?:"")
+                addDivider(this)
                 if(response.body != null){
                     addItemHeaderView(this,"Response Body",null,null)
                     addItemView(this,"content type: ",response.contentType)
                     addItemView(this,"content length: ",response.contentLength?.toString())
-                    addTextCopyView(this,Utils.jsonFormat(response.body!!))
+                    addTextCopyView(this,Utils.tryJsonFormat(response.contentType,response.body!!))
                 }
             }else if(data.error != null){
                 val errorReport = Utils.getErrorReport(requireContext(), data.error!!.exception)

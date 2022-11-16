@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cj.visuallog.R
 import com.cj.visuallog.data.CommunicationData
+import com.cj.visuallog.data.Status
 
 class VisualLogAdapter : RecyclerView.Adapter<VisualLogAdapter.VH>() {
 
@@ -75,6 +76,7 @@ class VisualLogAdapter : RecyclerView.Adapter<VisualLogAdapter.VH>() {
             mDurationTimeTv.text = data.getDurationTimeString()
 
             mStatusTv.setTextColor(data.getTextColor())
+            mStatusTv.textSize = if(data.status == Status.Requested) 11f else 14f
         }
     }
 

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.cj.visuallog.R
 import com.cj.visuallog.data.CommunicationData
+import com.cj.visuallog.utils.Utils
 
 class RequestLogFragment(private val data: CommunicationData) : Fragment() {
 
@@ -56,7 +57,7 @@ class RequestLogFragment(private val data: CommunicationData) : Fragment() {
                 addItemHeaderView(this,"Request Body",null,null)
                 addItemView(this,"mediaType: ",request.mediaType)
                 addItemView(this,"contentLength: ",request.contentLength?.toString())
-                addTextCopyView(this,request.body)
+                addTextCopyView(this,Utils.tryJsonFormat(request.mediaType,request.body!!))
             }
         }
     }

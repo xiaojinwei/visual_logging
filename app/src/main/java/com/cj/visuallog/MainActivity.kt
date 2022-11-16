@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import com.cj.visuallog.codec.IHandleLog
+import com.cj.visuallog.data.CommunicationData
+import com.cj.visuallog.data.Status
 import com.cj.visuallog.ext.addMenu
 import com.cj.visuallog.ui.VisualLogActivity
 import okhttp3.*
@@ -16,7 +19,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
 
     private val okHttpClient:OkHttpClient by lazy {
-        OkHttpClient.Builder().addInterceptor(VisualLogInterceptor())
+        OkHttpClient.Builder().addInterceptor(VisualLogInterceptor(object :IHandleLog{
+            override fun handle(data: CommunicationData) {
+                when(data.status){
+                    Status.Requested -> {
+                        if(data.request.body == null){
+                            data.request.mediaType = "application/json"
+                            data.request.body = "{\"test\":\"测试数据\"}"
+                        }
+                    }
+                    Status.Completed -> {}
+                    Status.Failed -> {}
+                }
+            }
+        }))
             .build()
     }
 

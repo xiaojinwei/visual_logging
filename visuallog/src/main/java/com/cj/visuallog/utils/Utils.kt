@@ -97,6 +97,18 @@ class Utils {
             return exceptionStr.toString()
         }
 
+        fun tryJsonFormat(contentType:String?,bodyString: String):String{
+            return if(isJsonContentType(contentType)){
+                jsonFormat(bodyString)
+            }else{
+                bodyString
+            }
+        }
+
+        fun isJsonContentType(contentType:String?):Boolean{
+            return contentType?.contains("application/json")?:false
+        }
+
         /**
          * json格式化
          */

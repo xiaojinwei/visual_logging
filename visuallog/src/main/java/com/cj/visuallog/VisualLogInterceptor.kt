@@ -1,14 +1,19 @@
 package com.cj.visuallog
 
+import com.cj.visuallog.codec.IHandleLog
 import com.cj.visuallog.data.*
-import com.cj.visuallog.ext.deepCopy
 import com.cj.visuallog.manager.CommunicationManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.IOException
 
-class VisualLogInterceptor : Interceptor {
+class VisualLogInterceptor(private var handle:IHandleLog = IHandleLog.Default) : Interceptor {
+
+    fun setHandleLog(handle:IHandleLog){
+        this.handle = handle
+    }
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val key = request.hashCode()
@@ -20,6 +25,7 @@ class VisualLogInterceptor : Interceptor {
         )
         CommunicationManager.apply {
             setCommunicationData(key,communicationData)
+            handle.handle(communicationData)
             notify(communicationData)
         }
         var response:Response
@@ -39,6 +45,7 @@ class VisualLogInterceptor : Interceptor {
             status = Status.Failed
             error = ErrorData(e)
         }
+        handle.handle(communicationData)
         CommunicationManager.notify(communicationData)
     }
 
@@ -61,9 +68,11 @@ class VisualLogInterceptor : Interceptor {
             responseData.contentLength = body.contentLength()
             val buildResponse =
                 response.newBuilder().body(bodyString.toResponseBody(body!!.contentType())).build()
+            handle.handle(communicationData)
             CommunicationManager.notify(communicationData)
             return buildResponse
         }else{
+            handle.handle(communicationData)
             CommunicationManager.notify(communicationData)
             return response
         }

@@ -9,13 +9,13 @@ import okhttp3.RequestBody
 import okio.Buffer
 
 data class RequestData(
-    val url: HttpUrl,
-    val method: String,
-    val headers: Headers,
-    val body: String?,
-    val mediaType: String?,
-    val contentLength:Long?,
-    val tags: Map<Class<*>, Any>,
+    var url: HttpUrl,
+    var method: String,
+    var headers: Headers,
+    var body: String?,
+    var mediaType: String?,
+    var contentLength:Long?,
+    var tags: Map<Class<*>, Any>,
 ){
     companion object {
         fun toRequestData(request: Request):RequestData{

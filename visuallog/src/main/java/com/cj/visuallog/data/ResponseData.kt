@@ -4,17 +4,17 @@ import okhttp3.Handshake
 import okhttp3.Headers
 
 data class ResponseData(
-    val request:RequestData,
-    val protocol:String,
-    val message: String,
-    val code: Int,
+    var request:RequestData,
+    var protocol:String,
+    var message: String,
+    var code: Int,
     var handshake: Handshake?,
-    val headers: Headers,
+    var headers: Headers,
     var body:String?,
     var contentType: String?,
     var contentLength: Long?,
-    val sentRequestAtMillis: Long,
-    val receivedResponseAtMillis: Long,
+    var sentRequestAtMillis: Long,
+    var receivedResponseAtMillis: Long,
 ){
     companion object{
 
