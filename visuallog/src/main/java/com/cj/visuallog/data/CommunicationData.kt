@@ -39,6 +39,14 @@ data class CommunicationData(
 
     fun getDurationTimeString(isShort :Boolean = true) = if(endTime != null) DateUtil.durationTime(startTime,endTime!!,isShort) else ""
 
+    /**
+     * 如果endTime是null，返回-1
+     */
+    fun getDurationTime():Long {
+        if(endTime == null) return -1
+        return endTime!! - startTime
+    }
+
     fun getTextColor():Int = when(status){
         Status.Requested -> Color.BLUE
         Status.Completed -> Color.GREEN

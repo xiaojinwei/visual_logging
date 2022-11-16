@@ -1,6 +1,7 @@
 package com.cj.visuallog.manager
 
 import com.cj.visuallog.data.CommunicationData
+import com.cj.visuallog.data.SearchParam
 import java.util.LinkedHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import java.util.HashSet
@@ -36,8 +37,11 @@ object CommunicationManager {
     }
 
     @Synchronized
-    fun search():List<CommunicationData>{
-        return dataMap.values.toList()
+    fun search(param: SearchParam):List<CommunicationData>{
+        val list = dataMap.values.toList().filter { param.isSearch(it) }.sortedWith(Comparator{a,b->
+            param.getOrderBy(a,b)
+        })
+        return list
     }
 
     @Synchronized

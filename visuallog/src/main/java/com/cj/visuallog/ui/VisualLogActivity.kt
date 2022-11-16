@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cj.visuallog.R
 import com.cj.visuallog.data.CommunicationData
+import com.cj.visuallog.data.SearchParam
+import com.cj.visuallog.data.SearchTimeOrderBy
 import com.cj.visuallog.ext.addMenu
 import com.cj.visuallog.manager.CommunicationManager
 import com.cj.visuallog.ui.detail.VisualLogDetailActivity
@@ -23,6 +25,8 @@ class VisualLogActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: VisualLogAdapter
     private var dataList : List<CommunicationData> = mutableListOf()
+
+    private val searchParam : SearchParam = SearchParam().apply { time = SearchTimeOrderBy.Desc }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,7 @@ class VisualLogActivity : AppCompatActivity() {
     }
 
     private fun refreshSearch(){
-        dataList = CommunicationManager.search()
+        dataList = CommunicationManager.search(searchParam)
         lifecycleScope.launch(Dispatchers.Main) {
             adapter.notify(dataList)
         }
@@ -81,7 +85,8 @@ class VisualLogActivity : AppCompatActivity() {
             setTitleTextColor(Color.WHITE)
 
             addMenu("Delete",R.drawable.ic_delete_24,true,true){
-
+                CommunicationManager.clear()
+                refreshSearch()
                 true
             }
             addMenu("Menu",R.drawable.ic_menu_24,true,true){
