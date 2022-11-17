@@ -7,6 +7,8 @@ import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.cj.visuallog.utils.Utils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -28,6 +30,18 @@ class ItemView @JvmOverloads constructor(
         addView(mValueTv)
 
         setPadding(0,getDimension(4.0f),0,getDimension(4.0f))
+
+        setOnClickListener {
+            val value = mValueTv.text.toString()
+            if(value.isNotBlank()){
+                MaterialAlertDialogBuilder(context)
+                    .setItems(arrayOf("Copy")) { dialog, what ->
+                        if (what == 0) {
+                            Utils.copyToClipboard(context, value, true)
+                        }
+                    }.show()
+            }
+        }
     }
 
     private fun getDimension(size:Float):Int{

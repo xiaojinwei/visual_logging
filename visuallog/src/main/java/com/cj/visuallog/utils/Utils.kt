@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import android.util.TypedValue
+import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONException
 
@@ -22,18 +23,17 @@ class Utils {
         /**
          * 复制到剪切板
          */
-        fun copyToClipboard(context:Context,text:String){
+        fun copyToClipboard(context:Context,text:String,isShowToast:Boolean = false){
             val cmb: ClipboardManager =
                 context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             cmb.setPrimaryClip(ClipData.newPlainText(null, text))
+            if(isShowToast){
+                Toast.makeText(context,"copy success",Toast.LENGTH_SHORT).show()
+            }
         }
 
         fun dp2px(context: Context,size:Float):Float{
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size, context.resources.displayMetrics)
-        }
-
-        fun getErrorString(){
-
         }
 
         /**

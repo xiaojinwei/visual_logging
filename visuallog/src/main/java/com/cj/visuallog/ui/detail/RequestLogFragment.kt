@@ -54,7 +54,7 @@ class RequestLogFragment(private val data: CommunicationData) : Fragment() {
             addItemView(this,"uri: ",request.url.toString())
             addDivider(this)
             if(request.body != null){
-                addItemHeaderView(this,"Request Body",null,null)
+                addItemHeaderView(this,"Request Body",null){request.body!!}
                 addItemView(this,"mediaType: ",request.mediaType)
                 addItemView(this,"contentLength: ",request.contentLength?.toString())
                 addTextCopyView(this,Utils.tryJsonFormat(request.mediaType,request.body!!))

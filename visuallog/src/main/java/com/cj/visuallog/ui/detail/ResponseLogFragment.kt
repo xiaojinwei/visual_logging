@@ -45,7 +45,7 @@ class ResponseLogFragment(private val data: CommunicationData) : Fragment() {
                 addTextCopyView(this,response.handshake?.toString()?:"")
                 addDivider(this)
                 if(response.body != null){
-                    addItemHeaderView(this,"Response Body",null,null)
+                    addItemHeaderView(this,"Response Body",null){response.body!!}
                     addItemView(this,"content type: ",response.contentType)
                     addItemView(this,"content length: ",response.contentLength?.toString())
                     addTextCopyView(this,Utils.tryJsonFormat(response.contentType,response.body!!))
