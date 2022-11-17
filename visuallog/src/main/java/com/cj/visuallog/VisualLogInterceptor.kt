@@ -21,7 +21,8 @@ class VisualLogInterceptor(private var handle:IHandleLog = IHandleLog.Default) :
             key,
             System.currentTimeMillis(),
             RequestData.toRequestData(request),
-            Status.Requested
+            Status.Requested,
+            TimeoutData(chain.connectTimeoutMillis(),chain.readTimeoutMillis(),chain.writeTimeoutMillis())
         )
         CommunicationManager.apply {
             setCommunicationData(key,communicationData)
@@ -31,25 +32,30 @@ class VisualLogInterceptor(private var handle:IHandleLog = IHandleLog.Default) :
         var response:Response
         try{
             response = chain.proceed(request)
-            response = processResponseBody(response,communicationData)
+            response = processResponseBody(chain,response,communicationData)
         }catch (e: IOException){
-            processError(e,communicationData)
+            processError(chain,e,communicationData)
             throw e
         }
         return response
     }
 
-    fun processError(e: IOException,communicationData:CommunicationData){
+    fun processError(chain: Interceptor.Chain,e: IOException,communicationData:CommunicationData){
         communicationData.apply {
             endTime = System.currentTimeMillis()
             status = Status.Failed
             error = ErrorData(e)
+            timeout.apply {
+                connectTimeoutMillis = chain.connectTimeoutMillis()
+                readTimeoutMillis = chain.readTimeoutMillis()
+                writeTimeoutMillis = chain.writeTimeoutMillis()
+            }
         }
         handle.handle(communicationData)
         CommunicationManager.notify(communicationData)
     }
 
-    fun processResponseBody(response:Response,communicationData:CommunicationData):Response{
+    fun processResponseBody(chain: Interceptor.Chain,response:Response,communicationData:CommunicationData):Response{
 
         val responseData = ResponseData(communicationData.request,response.protocol.toString(),
         response.message,response.code,response.handshake,response.headers.newBuilder().build(),
@@ -58,6 +64,11 @@ class VisualLogInterceptor(private var handle:IHandleLog = IHandleLog.Default) :
             endTime = System.currentTimeMillis()
             status = Status.Completed
             this.response = responseData
+            timeout.apply {
+                connectTimeoutMillis = chain.connectTimeoutMillis()
+                readTimeoutMillis = chain.readTimeoutMillis()
+                writeTimeoutMillis = chain.writeTimeoutMillis()
+            }
         }
 
         val body = response.body

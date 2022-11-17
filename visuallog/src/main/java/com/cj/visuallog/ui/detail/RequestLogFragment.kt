@@ -52,6 +52,9 @@ class RequestLogFragment(private val data: CommunicationData) : Fragment() {
             addItemView(this,"path: ",request.url.encodedPath)
             addItemView(this,"base url: ","${if(request.url.isHttps)"https://" else "http://"}${request.url.host}")
             addItemView(this,"uri: ",request.url.toString())
+            addItemView(this,"connect timeout millis: ",data.timeout.connectTimeoutMillis.toString())
+            addItemView(this,"read timeout millis: ",data.timeout.readTimeoutMillis.toString())
+            addItemView(this,"write timeout millis: ",data.timeout.writeTimeoutMillis.toString())
             addDivider(this)
             if(request.body != null){
                 addItemHeaderView(this,"Request Body",null){request.body!!}

@@ -11,10 +11,11 @@ data class CommunicationData(
     var response:ResponseData?,
     var error:ErrorData?,
     var status: Status,
+    var timeout:TimeoutData,
 ){
     companion object{
-        fun create(key: Int,startTime: Long,request: RequestData,status: Status) =
-            CommunicationData(key,startTime,null,request,null,null,Status.Requested)
+        fun create(key: Int,startTime: Long,request: RequestData,status: Status,timeout: TimeoutData) =
+            CommunicationData(key,startTime,null,request,null,null,status,timeout)
     }
 
     fun getHttpStatusString():String = when(status){

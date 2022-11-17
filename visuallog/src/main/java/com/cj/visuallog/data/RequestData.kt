@@ -1,6 +1,5 @@
 package com.cj.visuallog.data
 
-import com.cj.visuallog.ext.deepCopy
 import com.cj.visuallog.utils.ReflectUtil
 import okhttp3.Headers
 import okhttp3.HttpUrl
