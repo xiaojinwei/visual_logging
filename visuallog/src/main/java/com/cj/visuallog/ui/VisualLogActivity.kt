@@ -89,10 +89,10 @@ class VisualLogActivity : AppCompatActivity() {
                 refreshSearch()
                 true
             }
-            addMenu("Menu",R.drawable.ic_menu_24,true,true){
-
-                true
-            }
+//            addMenu("Menu",R.drawable.ic_menu_24,true,true){
+//
+//                true
+//            }
         }
     }
 

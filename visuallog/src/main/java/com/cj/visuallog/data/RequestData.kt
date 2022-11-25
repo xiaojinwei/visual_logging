@@ -15,6 +15,7 @@ data class RequestData(
     var mediaType: String?,
     var contentLength:Long?,
     var tags: Map<Class<*>, Any>,
+    var customMap:Map<String,Any>? = null,//用户自定义展示数据
 ){
     companion object {
         fun toRequestData(request: Request):RequestData{

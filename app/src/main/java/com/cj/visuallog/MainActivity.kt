@@ -26,9 +26,12 @@ class MainActivity : AppCompatActivity() {
                         if(data.request.body == null){
                             data.request.mediaType = "application/json"
                             data.request.body = "{\"test\":\"测试数据\"}"
+                            data.request.customMap = mutableMapOf("name" to "Visual Log")
                         }
                     }
-                    Status.Completed -> {}
+                    Status.Completed -> {
+                        //data.response?.customMap = mutableMapOf("name" to "Visual Log")
+                    }
                     Status.Failed -> {}
                 }
             }

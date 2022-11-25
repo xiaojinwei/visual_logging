@@ -56,6 +56,13 @@ class RequestLogFragment(private val data: CommunicationData) : Fragment() {
             addItemView(this,"read timeout millis: ",data.timeout.readTimeoutMillis.toString())
             addItemView(this,"write timeout millis: ",data.timeout.writeTimeoutMillis.toString())
             addDivider(this)
+            if(request.customMap?.isNotEmpty() == true){
+                addItemHeaderView(this,"Custom",null,null)
+                request.customMap!!.forEach { entry->
+                    addItemView(this,"${entry.key}: ",entry.value.toString())
+                }
+                addDivider(this)
+            }
             if(request.body != null){
                 addItemHeaderView(this,"Request Body",null){request.body!!}
                 addItemView(this,"mediaType: ",request.mediaType)

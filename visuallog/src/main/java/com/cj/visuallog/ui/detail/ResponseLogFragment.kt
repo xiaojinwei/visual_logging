@@ -44,6 +44,13 @@ class ResponseLogFragment(private val data: CommunicationData) : Fragment() {
                 addItemHeaderView(this,"Handshake",null,null)
                 addTextCopyView(this,response.handshake?.toString()?:"")
                 addDivider(this)
+                if(response.customMap?.isNotEmpty() == true){
+                    addItemHeaderView(this,"Custom",null,null)
+                    response.customMap!!.forEach { entry->
+                        addItemView(this,"${entry.key}: ",entry.value.toString())
+                    }
+                    addDivider(this)
+                }
                 if(response.body != null){
                     addItemHeaderView(this,"Response Body",null){response.body!!}
                     addItemView(this,"content type: ",response.contentType)

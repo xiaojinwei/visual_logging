@@ -15,6 +15,7 @@ data class ResponseData(
     var contentLength: Long?,
     var sentRequestAtMillis: Long,
     var receivedResponseAtMillis: Long,
+    var customMap:Map<String,Any>? = null,//用户自定义展示数据
 ){
     companion object{
 
