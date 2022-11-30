@@ -10,7 +10,7 @@ import com.cj.visuallog.R
 import com.cj.visuallog.data.CommunicationData
 import com.cj.visuallog.utils.Utils
 
-class RequestLogFragment(private val data: CommunicationData) : Fragment() {
+class RequestLogFragment(private val data: CommunicationData) : Fragment(),ILogRefresh {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,8 +22,13 @@ class RequestLogFragment(private val data: CommunicationData) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindViewData(view)
+    }
+
+    private fun bindViewData(view: View?){
         val request = data.request
-        (view.findViewById<LinearLayout>(R.id.container)).apply {
+        (view?.findViewById<LinearLayout>(R.id.container))?.apply {
+            removeAllViews()
             if(request.headers.size > 0){
                 addItemHeaderView(this,"Request Header",null) { request.headers.toString() }
                 request.headers.names().forEach {name->
@@ -70,6 +75,10 @@ class RequestLogFragment(private val data: CommunicationData) : Fragment() {
                 addTextCopyView(this,Utils.tryJsonFormat(request.mediaType,request.body!!))
             }
         }
+    }
+
+    override fun onRefresh() {
+        bindViewData(view)
     }
 
 }

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.cj.visuallog.R
 import com.cj.visuallog.data.CommunicationData
 
-class GeneralLogFragment(private val data: CommunicationData) : Fragment() {
+class GeneralLogFragment(private val data: CommunicationData) : Fragment(),ILogRefresh {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +21,12 @@ class GeneralLogFragment(private val data: CommunicationData) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (view.findViewById<LinearLayout>(R.id.container)).apply {
+        bindViewData(view)
+    }
+
+    private fun bindViewData(view: View?){
+        (view?.findViewById<LinearLayout>(R.id.container))?.apply {
+            removeAllViews()
             addItemHeaderView(this,"General",null,null)
             addItemView(this,"request url: ",data.request.url.toString())
             addItemView(this,"request method: ",data.request.method)
@@ -31,6 +36,10 @@ class GeneralLogFragment(private val data: CommunicationData) : Fragment() {
             addItemView(this,"duration: ",data.getDurationTimeString(false))
             addItemView(this,"request status: ",data.getStatusString(), data.getTextColor())
         }
+    }
+
+    override fun onRefresh() {
+        bindViewData(view)
     }
 
 

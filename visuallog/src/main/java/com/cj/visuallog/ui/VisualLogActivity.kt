@@ -93,6 +93,10 @@ class VisualLogActivity : AppCompatActivity() {
 //
 //                true
 //            }
+
+            setNavigationOnClickListener {
+                finish()
+            }
         }
     }
 

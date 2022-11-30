@@ -11,7 +11,7 @@ import com.cj.visuallog.data.CommunicationData
 import com.cj.visuallog.utils.DateUtil
 import com.cj.visuallog.utils.Utils
 
-class ResponseLogFragment(private val data: CommunicationData) : Fragment() {
+class ResponseLogFragment(private val data: CommunicationData) : Fragment(),ILogRefresh {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,8 +23,13 @@ class ResponseLogFragment(private val data: CommunicationData) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindViewData(view)
+    }
+
+    private fun bindViewData(view: View?){
         val response = data.response
-        (view.findViewById<LinearLayout>(R.id.container)).apply {
+        (view?.findViewById<LinearLayout>(R.id.container))?.apply {
+            removeAllViews()
             if(response != null){
                 if(response.headers.size > 0){
                     addItemHeaderView(this,"Response Header",null) { response.headers.toString() }
@@ -63,7 +68,10 @@ class ResponseLogFragment(private val data: CommunicationData) : Fragment() {
                 addTextCopyView(this,errorReport)
             }
         }
+    }
 
+    override fun onRefresh() {
+        bindViewData(view)
     }
 
 }
