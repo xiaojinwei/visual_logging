@@ -15,8 +15,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.jessyan.autosize.internal.CancelAdapt
 
-class VisualLogDetailActivity : AppCompatActivity() {
+class VisualLogDetailActivity : AppCompatActivity(),CancelAdapt {
 
     private lateinit var toolbar: Toolbar
     private lateinit var tabLayout: TabLayout

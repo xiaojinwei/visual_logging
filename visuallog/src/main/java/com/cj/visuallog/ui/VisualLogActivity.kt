@@ -18,8 +18,9 @@ import com.cj.visuallog.manager.CommunicationManager
 import com.cj.visuallog.ui.detail.VisualLogDetailActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.jessyan.autosize.internal.CancelAdapt
 
-class VisualLogActivity : AppCompatActivity() {
+class VisualLogActivity : AppCompatActivity(),CancelAdapt {
 
     private lateinit var toolbar: Toolbar
     private lateinit var recyclerView: RecyclerView
